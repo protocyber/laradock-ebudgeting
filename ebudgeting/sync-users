@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This script is used to copy users db from host to /opt folder which is mapped inside workspace container
+
+# Get the absolute path of the script, even if it's a symbolic link
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+
+# Get the directory of the script
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+LARADOCK_ROOT="$SCRIPT_DIR/.."
+
+FOLDER_NAME="$LARADOCK_ROOT/.passwd"
+
+# Shadow should only be mounted into containers needing to authenticate against PAM
+# rm -rf "$FOLDER_NAME" && mkdir "$FOLDER_NAME" && cp -p /etc/{passwd,group,shadow} "$FOLDER_NAME"
+
+rm -rf "$FOLDER_NAME" && mkdir "$FOLDER_NAME" && cp -p /etc/{passwd,group} "$FOLDER_NAME"
+
