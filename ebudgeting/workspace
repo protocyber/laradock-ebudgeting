@@ -1,9 +1,15 @@
 #!/bin/bash
 
-ssh -o PasswordAuthentication=no    \
-    -o StrictHostKeyChecking=no     \
-    -o UserKnownHostsFile=/dev/null \
-    -o LogLevel=ERROR		    \
-    -p 2222                         \
-    -t "$USER"@localhost 	    \
-    "cd /var/www/$USER ; bash --login"
+if [ "$USER" == "root" ]; then
+    USER=""
+fi
+
+# Get the absolute path of the script, even if it's a symbolic link
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+
+# Get the directory of the script
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+# echo "The script directory is: $SCRIPT_DIR"
+
+cd "$SCRIPT_DIR"/.. && docker compose exec -itw "/var/www/$USER" --user="$(id -u $USER)" workspace bash
+
