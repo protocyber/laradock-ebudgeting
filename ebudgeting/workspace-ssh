@@ -6,4 +6,4 @@ ssh -o PasswordAuthentication=no    \
     -o LogLevel=ERROR		    \
     -p 2222                         \
     -t "$USER"@localhost 	    \
-    "cd /var/www/$USER ; bash --login"
+    "cd /srv/ebudgeting/$USER ; bash --login"

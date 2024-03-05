@@ -11,5 +11,5 @@ SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 # echo "The script directory is: $SCRIPT_DIR"
 
-cd "$SCRIPT_DIR"/.. && docker compose exec -itw "/var/www/$USER" --user="$(id -u $USER)" workspace bash
+cd "$SCRIPT_DIR"/.. && docker compose exec -itw "/srv/ebudgeting/$USER" --user="$(id -u $USER)" workspace bash
 

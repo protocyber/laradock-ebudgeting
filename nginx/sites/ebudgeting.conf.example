@@ -16,7 +16,7 @@ server {
     # ssl_certificate_key /etc/nginx/ssl/default.key;
 
     server_name ebudgeting.test;
-    root /var/www/portal/public;
+    root /srv/ebudgeting/portal/public;
     index index.php index.html index.htm;
 
     location / {
@@ -40,7 +40,7 @@ server {
     }
 
     location /.well-known/acme-challenge/ {
-        root /var/www/letsencrypt/;
+        root /srv/ebudgeting/letsencrypt/;
         log_not_found off;
     }
 
@@ -52,7 +52,7 @@ server {
     ##############
     location ^~ /2024 {
 
-        alias /var/www/2024/public;
+        alias /srv/ebudgeting/2024/public;
         try_files $uri $uri/ @ebudgeting2024;
 
         location ~ \.php {
@@ -77,7 +77,7 @@ server {
     ##############
     location ^~ /2025 {
 
-        alias /var/www/2025/public;
+        alias /srv/ebudgeting/2025/public;
         try_files $uri $uri/ @ebudgeting2025;
 
         location ~ \.php {
