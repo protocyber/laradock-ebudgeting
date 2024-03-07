@@ -186,20 +186,8 @@ services:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
         - docker-in-docker:/certs/client
         - ./php-worker/supervisord.d:/etc/supervisord.d
-        # For access by each user
-        - /home/${USER_1}:/home/${USER_1}
-        - /home/${USER_2}:/home/${USER_2}
-        - /home/${USER_3}:/home/${USER_3}
-        - /home/${USER_4}:/home/${USER_4}
-        - /home/${USER_5}:/home/${USER_5}
-        - /home/${USER_6}:/home/${USER_6}
-        - /home/${USER_7}:/home/${USER_7}
-        - /home/${USER_8}:/home/${USER_8}
-        # Authentication
-        - ./.passwd/passwd:/etc/passwd:ro
-        - ./.passwd/group:/etc/group:ro
-        # Shadow should only be mounted into containers needing to authenticate against PAM
-        #- ./.passwd/shadow:/etc/shadow:ro
+        # For access by each user. Don't delete the following placeholder
+        ##### Placeholder for home mapping ####
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       ports:

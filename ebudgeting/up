@@ -13,4 +13,40 @@ cd "$SCRIPT_DIR"
 
 cd "$LARADOCK_ROOT"
 
-docker compose up -d nginx postgres redis
+env_file=".env"
+compose_file="docker-compose.yml"
+placeholder_string="# Placeholder for home mapping"
+
+# Create a string for volumes with proper indentation
+volumes_string=""
+while IFS='=' read -r key value; do
+    if [[ $key == USER_* ]]; then
+        user="${value}"
+        volumes_string+="        - /home/${user}:/home/${user}\n"
+    fi
+done < "$env_file"
+
+# Append the additional string only if $volumes_string is empty
+if [ -n "$volumes_string" ]; then
+    volumes_string+="        # Authentication\n"
+    volumes_string+="        - ./.passwd/passwd:/etc/passwd${LINK_PASSWD:+.tmp}:ro\n"
+    volumes_string+="        - ./.passwd/group:/etc/group${LINK_PASSWD:+.tmp}:ro\n"
+    volumes_string+="        # Shadow should only be mounted into containers needing to authenticate against PAM\n"
+    volumes_string+="        # - ./.passwd/shadow:/etc/shadow:ro\n"  # Commented out to avoid mounting by default
+fi
+
+#echo -e "$volumes_string"
+
+# Store the result of awk in a variable
+result=$(awk -v volumes="$volumes_string" '/'"$placeholder_string"'/ {print volumes; next} 1' "$compose_file")
+
+# Print the result
+#printf "%s\n" "$result"; exit 0
+
+# Print the result to the console with correct formatting
+docker compose \
+  --file <(echo "$result") \
+  --env-file "$env_file" \
+  --project-directory . \
+  up -d \
+  workspace php-fpm nginx redis

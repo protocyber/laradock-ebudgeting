@@ -1,7 +1,49 @@
 #!/bin/bash
 
-if [ "$USER" == "root" ]; then
-    USER=""
+# Set default values
+USER_OPTION=""
+PATH_OPTION=""
+DOCKER_USER=""
+
+# Parse command line options
+while getopts ":u:p:" opt; do
+  case $opt in
+    u)
+      USER_OPTION="$OPTARG"
+      ;;
+    p)
+      PATH_OPTION="$OPTARG"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+# If -u option is provided, set USER variable accordingly
+if [ -n "$USER_OPTION" ]; then
+  USER="$USER_OPTION"
+fi
+
+# If -p option is provided, set PATH_OPTION variable accordingly
+if [ -n "$PATH_OPTION" ]; then
+  USER_PATH="$PATH_OPTION"
+elif [ "$USER" == "root" ]; then
+  USER_PATH=""
+else
+  USER_PATH="$USER"
+fi
+
+# Get the user ID or default to 1000 if not set
+USER_ID="$(id -u $USER 2>/dev/null)"
+if [ -z "$USER_ID" ]; then
+  # 1000 is laradock in workspace container
+  USER_ID=1000
 fi
 
 # Get the absolute path of the script, even if it's a symbolic link
@@ -11,5 +53,7 @@ SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 # echo "The script directory is: $SCRIPT_DIR"
 
-cd "$SCRIPT_DIR"/.. && docker compose exec -itw "/srv/ebudgeting/$USER" --user="$(id -u $USER)" workspace bash
+# echo "user is: $USER"
+# echo "user path is: $USER_PATH"
 
+cd "$SCRIPT_DIR"/.. && docker compose exec -itw "/srv/ebudgeting/$USER_PATH" --user="$USER_ID" workspace bash
