@@ -29,7 +29,7 @@ if [ -x "$script_path" ]; then
 else
     echo "Script '$script_name' not found or not executable."
     echo "Forwarding arguments to command: docker compose $script_name"
-    echo -n "Press ctrl+c to cancel "
+    echo -n "(press ctrl+c to cancel) "
     for i in {1..3}; do
         echo -n "."
         sleep 1

@@ -7,10 +7,6 @@ SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 LARADOCK_ROOT="$SCRIPT_DIR/.."
 
-cd "$SCRIPT_DIR"
-
-./sync-users
-
 cd "$LARADOCK_ROOT"
 
 env_file=".env"
@@ -20,14 +16,16 @@ placeholder_string="# Placeholder for home mapping"
 # Create a string for volumes with proper indentation
 volumes_string=""
 while IFS='=' read -r key value; do
-    if [[ $key == USER_* ]]; then
+    if [[ $key == USER_* && -n "$value" ]]; then
         user="${value}"
         volumes_string+="        - /home/${user}:/home/${user}\n"
     fi
 done < "$env_file"
 
-# Append the additional string only if $volumes_string is empty
+# Append the additional string only if $volumes_string is not empty
 if [ -n "$volumes_string" ]; then
+    # copy /etc/passwd to backup file
+    "$SCRIPT_DIR/sync-users"
     volumes_string+="        # Authentication\n"
     volumes_string+="        - ./.passwd/passwd:/etc/passwd${LINK_PASSWD:+.tmp}:ro\n"
     volumes_string+="        - ./.passwd/group:/etc/group${LINK_PASSWD:+.tmp}:ro\n"
