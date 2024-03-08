@@ -1,9 +1,35 @@
 #!/bin/bash
 
-ssh -o PasswordAuthentication=no    \
-    -o StrictHostKeyChecking=no     \
-    -o UserKnownHostsFile=/dev/null \
-    -o LogLevel=ERROR		            \
-    -p 2222                         \
-    -t "$USER"@localhost 	          \
-    "cd /srv/ebudgeting/$USER ; bash --login"
+# Get the absolute path of the script, even if it's a symbolic link
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+
+# Get the directory of the script
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+# echo "The script directory is: $SCRIPT_DIR"
+
+LARADOCK_ROOT="$SCRIPT_DIR/.."
+
+# Default ssh options
+SSH_OPTIONS=(
+    -o PasswordAuthentication=no
+    -o StrictHostKeyChecking=no
+    -o UserKnownHostsFile=/dev/null
+    -o LogLevel=ERROR
+    -p 2222
+    -t
+)
+
+# Check for additional arguments
+if [[ $# -gt 0 ]]; then
+    # Append additional arguments to SSH_OPTIONS
+    SSH_OPTIONS+=("$@")
+fi
+
+# Extract APP_CODE_PATH_CONTAINER value from .env file
+APP_CODE_PATH=$(grep -E '^APP_CODE_PATH_CONTAINER=' "$LARADOCK_ROOT/".env | awk -F '=' '{print $2}' | tr -d '\r')
+
+# Set a default value if not found in the .env file
+#APP_CODE_PATH=${APP_CODE_PATH:-"/srv/ebudgeting"}
+
+# Run the ssh command with the constructed options
+ssh "${SSH_OPTIONS[@]}" "$USER@localhost" "cd $APP_CODE_PATH/$USER ; bash --login"

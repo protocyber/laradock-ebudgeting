@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Get the absolute path of the script, even if it's a symbolic link
 SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 
@@ -30,6 +29,6 @@ else
         sleep 1
     done
     echo -ne '\n'
-    docker compose --project-directory="$LARADOCK_ROOT" "$script_name" "$@"
+    docker compose --file="$LARADOCK_ROOT/docker-compose.yml" --project-directory="$LARADOCK_ROOT" "$script_name" "$@"
     exit 1
 fi
