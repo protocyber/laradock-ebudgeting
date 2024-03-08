@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script is used as helper script
+# to run other scripts in this directory by passing it as argument
+# if the passed script filename is not found,
+# it will be redirected to 'docker compose xxx' command
+
 # Get the absolute path of the script, even if it's a symbolic link
 SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 
@@ -23,8 +28,9 @@ if [ -x "$script_path" ]; then
     "$script_path" "$@"
 else
     echo "Script '$script_name' not found or not executable."
-    echo -n "Forwarding arguments to command: docker compose $script_name "
-    for i in {1..5}; do
+    echo "Forwarding arguments to command: docker compose $script_name"
+    echo -n "Press ctrl+c to cancel "
+    for i in {1..3}; do
         echo -n "."
         sleep 1
     done

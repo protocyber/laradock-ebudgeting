@@ -9,10 +9,30 @@ SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 LARADOCK_ROOT="$SCRIPT_DIR/.."
 
-FOLDER_NAME="$LARADOCK_ROOT/.passwd"
+BACKUP_DIR=$(realpath "$LARADOCK_ROOT/.passwd")
 
 # Shadow should only be mounted into containers needing to authenticate against PAM
-# rm -rf "$FOLDER_NAME" && mkdir "$FOLDER_NAME" && cp -p /etc/{passwd,group,shadow} "$FOLDER_NAME"
+# rm -rf "$BACKUP_DIR" && mkdir "$BACKUP_DIR" && cp -p /etc/{passwd,group,shadow} "$BACKUP_DIR"
 
-rm -rf "$FOLDER_NAME" && mkdir "$FOLDER_NAME" && cp -p /etc/{passwd,group} "$FOLDER_NAME"
+echo "Copy auth files to $BACKUP_DIR"
+rm -rf "$BACKUP_DIR" && mkdir "$BACKUP_DIR" && cp /etc/{passwd,group} "$BACKUP_DIR"
 
+# Backup path
+NEW_PASSWD_PATH="$BACKUP_DIR/passwd"
+#echo "$NEW_PASSWD_PATH"
+
+# Minimum UID for ordinary users
+MIN_UID=1000
+
+# Iterate over users in /etc/passwd
+while IFS=: read -r username password uid gid home shell; do
+    # Check if UID is 1000 or greater and the base name of the shell is zsh
+    if [ "$uid" -ge "$MIN_UID" ] && [ "$(basename "$shell")" = "zsh" ]; then
+        # Extract the current shell dynamically and replace it with /bin/bash in the backup file
+        current_shell=$(grep "^$username:" /etc/passwd | cut -d: -f7)
+        sed -i "/^$username:/ s|:$current_shell$|:/bin/bash|" "$NEW_PASSWD_PATH"
+        echo "Changed shell for user $username to /bin/bash in backup file"
+    fi
+# we are piping /etc/passwd instead of $NEW_PASSWD_PATH
+# to prevent reading and writing the same file simultaneously in the same pipe
+done < /etc/passwd
