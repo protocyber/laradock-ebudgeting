@@ -47,4 +47,4 @@ docker compose \
   --env-file "$env_file" \
   --project-directory . \
   up -d \
-  workspace php-fpm nginx redis
+  workspace php-fpm nginx redis postgres
