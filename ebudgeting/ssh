@@ -3,7 +3,7 @@
 ssh -o PasswordAuthentication=no    \
     -o StrictHostKeyChecking=no     \
     -o UserKnownHostsFile=/dev/null \
-    -o LogLevel=ERROR		    \
+    -o LogLevel=ERROR		            \
     -p 2222                         \
-    -t "$USER"@localhost 	    \
+    -t "$USER"@localhost 	          \
     "cd /srv/ebudgeting/$USER ; bash --login"
