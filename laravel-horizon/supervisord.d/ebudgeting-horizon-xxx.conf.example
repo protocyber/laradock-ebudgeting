@@ -1,0 +1,9 @@
+; Replace xxx with year
+[program:ebudgeting-horizon-xxx]
+process_name=%(program_name)s_%(process_num)02d
+user=laradock
+command=php /srv/ebudgeting/xxx/artisan horizon
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/srv/ebudgeting/xxx/storage/logs/horizon.log
