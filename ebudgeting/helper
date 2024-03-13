@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# This script is used as helper script
-# to run other scripts in this directory by passing it as argument
-# if the passed script filename is not found,
-# it will be redirected to 'docker compose xxx' command
+# This script serves as a helper to run other scripts in this directory by passing them as arguments.
+# If the specified script filename is not found, it will be redirected to the 'docker compose xxx' command.
 
 # Get the absolute path of the script, even if it's a symbolic link
 SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
@@ -27,13 +25,12 @@ if [ -x "$script_path" ]; then
     # Execute the script with the remaining arguments
     "$script_path" "$@"
 else
-    echo "Script '$script_name' not found or not executable."
-    echo "Forwarding arguments to command: docker compose $script_name"
-    echo -n "(press ctrl+c to cancel) "
-    for i in {1..3}; do
-        echo -n "."
-        sleep 1
-    done
+    echo "The script '$script_name' was not found or is not executable. Would you like to execute the following command?"
+    read -p "docker compose $script_name $@ (y/n): " response
+    if [ "$response" != "y" ]; then
+        echo "Exiting the script."
+        exit 1
+    fi
     echo -ne '\n'
     docker compose --file="$LARADOCK_ROOT/docker-compose.yml" --project-directory="$LARADOCK_ROOT" "$script_name" "$@"
     exit 1

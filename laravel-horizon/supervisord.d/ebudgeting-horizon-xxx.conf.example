@@ -1,9 +1,18 @@
-; Replace xxx with year
-[program:ebudgeting-horizon-xxx]
+; Replace xxx with actual username
+[program:ebudgeting-horizon-xxx-latest]
 process_name=%(program_name)s_%(process_num)02d
 user=laradock
-command=php /srv/ebudgeting/xxx/artisan horizon
+command=php /srv/ebudgeting/xxx/latest/artisan horizon
 autostart=true
 autorestart=true
 redirect_stderr=true
-stdout_logfile=/srv/ebudgeting/xxx/storage/logs/horizon.log
+stdout_logfile=/srv/ebudgeting/xxx/latest/storage/logs/horizon.log
+
+; [program:ebudgeting-horizon-xxx-2024]
+; process_name=%(program_name)s_%(process_num)02d
+; user=laradock
+; command=php /srv/ebudgeting/xxx/2024/artisan horizon
+; autostart=true
+; autorestart=true
+; redirect_stderr=true
+; stdout_logfile=/srv/ebudgeting/xxx/2024/storage/logs/horizon.log
