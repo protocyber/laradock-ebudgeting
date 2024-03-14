@@ -96,4 +96,254 @@ server {
     location @ebudgeting2025 {
         rewrite /2025/(.*)$ /2025/index.php?/$1 last;
     }
+
+    ##############
+    #    2026    #
+    ##############
+    location ^~ /2026 {
+
+        alias /srv/ebudgeting/2026/public;
+        try_files $uri $uri/ @ebudgeting2026;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2026 {
+        rewrite /2026/(.*)$ /2026/index.php?/$1 last;
+    }
+
+    ##############
+    #    2027    #
+    ##############
+    location ^~ /2027 {
+
+        alias /srv/ebudgeting/2027/public;
+        try_files $uri $uri/ @ebudgeting2027;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2027 {
+        rewrite /2027/(.*)$ /2027/index.php?/$1 last;
+    }
+
+    ##############
+    #    2028    #
+    ##############
+    location ^~ /2028 {
+
+        alias /srv/ebudgeting/2028/public;
+        try_files $uri $uri/ @ebudgeting2028;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2028 {
+        rewrite /2028/(.*)$ /2028/index.php?/$1 last;
+    }
+
+    ##############
+    #    2029    #
+    ##############
+    location ^~ /2029 {
+
+        alias /srv/ebudgeting/2029/public;
+        try_files $uri $uri/ @ebudgeting2029;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2029 {
+        rewrite /2029/(.*)$ /2029/index.php?/$1 last;
+    }
+
+    ##############
+    #    2030    #
+    ##############
+    location ^~ /2030 {
+
+        alias /srv/ebudgeting/2030/public;
+        try_files $uri $uri/ @ebudgeting2030;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2030 {
+        rewrite /2030/(.*)$ /2030/index.php?/$1 last;
+    }
+
+    ##############
+    #    2031    #
+    ##############
+    location ^~ /2031 {
+
+        alias /srv/ebudgeting/2031/public;
+        try_files $uri $uri/ @ebudgeting2031;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2031 {
+        rewrite /2031/(.*)$ /2031/index.php?/$1 last;
+    }
+
+    ##############
+    #    2032    #
+    ##############
+    location ^~ /2032 {
+
+        alias /srv/ebudgeting/2032/public;
+        try_files $uri $uri/ @ebudgeting2032;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2032 {
+        rewrite /2032/(.*)$ /2032/index.php?/$1 last;
+    }
+
+    ##############
+    #    2033    #
+    ##############
+    location ^~ /2033 {
+
+        alias /srv/ebudgeting/2033/public;
+        try_files $uri $uri/ @ebudgeting2033;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2033 {
+        rewrite /2033/(.*)$ /2033/index.php?/$1 last;
+    }
+
+    ##############
+    #    2034    #
+    ##############
+    location ^~ /2034 {
+
+        alias /srv/ebudgeting/2034/public;
+        try_files $uri $uri/ @ebudgeting2034;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2034 {
+        rewrite /2034/(.*)$ /2034/index.php?/$1 last;
+    }
+
+    ##############
+    #    2035    #
+    ##############
+    location ^~ /2035 {
+
+        alias /srv/ebudgeting/2035/public;
+        try_files $uri $uri/ @ebudgeting2035;
+
+        location ~ \.php {
+            try_files $uri /index.php =404;
+            fastcgi_pass php-upstream;
+            fastcgi_index index.php;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  $request_filename;
+            #fixes timeouts
+            fastcgi_read_timeout 600;
+            include fastcgi_params;
+        }
+    }
+    location @ebudgeting2035 {
+        rewrite /2035/(.*)$ /2035/index.php?/$1 last;
+    }
 }
