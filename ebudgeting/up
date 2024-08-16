@@ -11,14 +11,17 @@ cd "$LARADOCK_ROOT"
 
 env_file=".env"
 compose_file="docker-compose.yml"
-placeholder_string="# Placeholder for home mapping"
+volume_placeholder="# Placeholder for home mapping"
+hostname_placeholder="# Placeholder for hostname mapping"
 
-# Create a string for volumes with proper indentation
+# Create a string for volumes and hostname with proper indentation
 volumes_string=""
+hostname_string=""
 while IFS='=' read -r key value; do
     if [[ $key == USER_* && -n "$value" ]]; then
         user="${value}"
         volumes_string+="        - /home/${user}:/home/${user}\n"
+        hostname_string+="        - \"${user}.ebudgeting.test:host-gateway\"\n"
     fi
 done < "$env_file"
 
@@ -34,12 +37,14 @@ if [ -n "$volumes_string" ]; then
 fi
 
 #echo -e "$volumes_string"
+#echo -e "$hostname_string"
 
 # Store the result of awk in a variable
-result=$(awk -v volumes="$volumes_string" '/'"$placeholder_string"'/ {print volumes; next} 1' "$compose_file")
+result=$(awk -v volumes="$volumes_string" '/'"$volume_placeholder"'/ {print volumes; next} 1' "$compose_file")
+result=$(echo "$result" | awk -v user_hostname="$hostname_string" '/'"$hostname_placeholder"'/ {print user_hostname; next} 1')
 
 # Print the result
-#printf "%s\n" "$result"; exit 0
+# printf "%s\n" "$result"; exit 0
 
 # Print the result to the console with correct formatting
 docker compose \
