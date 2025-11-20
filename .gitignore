@@ -2,6 +2,7 @@
 .vscode
 /logs
 /data
+/.data
 .env
 /.project
 .docker-sync
